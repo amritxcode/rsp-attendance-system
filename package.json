@@ -1,0 +1,22 @@
+{
+  "name": "rsp-attendance-pwa",
+  "version": "1.0.0",
+  "description": "Vocational trainee attendance system for Rourkela Steel Plant, migrated to Supabase.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "serve .",
+    "start": "serve .",
+    "build": "echo 'Static build complete'"
+  },
+  "keywords": [
+    "pwa",
+    "supabase",
+    "attendance",
+    "geolocation"
+  ],
+  "author": "RSP",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}

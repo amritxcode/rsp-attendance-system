@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-IN" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1565C0" />
+    <title>RSP Attendance — Admin Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+
+    <script src="dashboard.js" defer></script>
+  </head>
+  <body>
+    <!-- LOGIN SCREEN -->
+    <div id="adminLoginScreen" class="screen auth-screen active">
+      <div class="auth-header">
+        <div class="logo-mark">🏭</div>
+        <h1 class="auth-title">Admin Login</h1>
+        <p class="auth-subtitle">RSP Attendance · Administration</p>
+      </div>
+      <div class="auth-body">
+        <div
+          id="adminLoginAlert"
+          class="alert error"
+          style="display: none"
+          role="alert"
+        ></div>
+
+        <div class="form-group">
+          <label class="form-label" for="adminEmail">Admin Email</label>
+          <input
+            id="adminEmail"
+            class="form-input"
+            type="email"
+            autocomplete="email"
+            placeholder="admin@rsp.gov.in"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="adminPassword">Password</label>
+          <input
+            id="adminPassword"
+            class="form-input"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter password"
+          />
+        </div>
+
+        <button type="button" id="adminLoginBtn" class="btn btn-primary">
+          Sign In
+        </button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD SCREEN -->
+    <div id="adminDashboardScreen" class="screen">
+      <header class="dashboard-header">
+        <div class="dashboard-header-left">
+          <div class="header-logo">🏭</div>
+          <div>
+            <div class="header-title">RSP Attendance</div>
+            <div class="header-subtitle">Admin Dashboard</div>
+          </div>
+        </div>
+        <button class="btn-logout" id="adminLogoutBtn">Sign Out</button>
+      </header>
+
+      <main class="dashboard-body">
+        <div class="section-title">Filters</div>
+        <div class="filters-grid">
+          <div class="form-group">
+            <label class="form-label" for="filterDate">Date</label>
+            <input id="filterDate" class="form-input" type="date" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="filterDept">Department</label>
+            <select id="filterDept" class="form-input">
+              <option value="">All Departments</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="filterBatch">Batch</label>
+            <select id="filterBatch" class="form-input">
+              <option value="">All Batches</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="filterSearch"
+              >Search Trainee ID / Name</label
+            >
+            <input
+              id="filterSearch"
+              class="form-input"
+              type="text"
+              placeholder="e.g. RSP2025001"
+            />
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button id="applyFiltersBtn" class="btn btn-primary btn-sm">
+            Apply Filters
+          </button>
+          <button id="exportCsvBtn" class="btn btn-amber btn-sm">
+            ⬇ Export CSV
+          </button>
+        </div>
+
+        <div class="summary-cards" id="summaryCards"></div>
+
+        <div class="section-title">Attendance Records</div>
+        <div class="table-wrap">
+          <table class="attendance-table">
+            <thead>
+              <tr>
+                <th>Trainee ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Batch</th>
+                <th>Morning</th>
+                <th>Midday</th>
+                <th>Final Status</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTableBody">
+              <tr>
+                <td colspan="7" class="empty-row">Loading…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../supabase.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>

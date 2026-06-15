@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en-IN" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="RSP Attendance — Rourkela Steel Plant vocational trainee attendance system"
+    />
+    <meta name="theme-color" content="#1565C0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="RSP Attend" />
+    <meta name="application-name" content="RSP Attendance" />
+
+    <!-- Favicons / Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="icons/icon-192.png"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-96.png" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="app.js" defer></script>
+
+    <title>RSP Attendance</title>
+  </head>
+  <body>
+    <!-- ═══════════════════════════════════════════════════════════
+     LOADING SCREEN
+═══════════════════════════════════════════════════════════ -->
+    <div id="loadingScreen">
+      <div class="loading-logo">🏭</div>
+      <div class="loading-spinner"></div>
+      <div class="loading-text">RSP Attendance</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     APP ROOT
+═══════════════════════════════════════════════════════════ -->
+    <div id="app">
+      <!-- ══════════════════════════════════════════════════════
+       SCREEN 1: LOGIN
+  ══════════════════════════════════════════════════════ -->
+      <div id="loginScreen" class="screen auth-screen">
+        <div class="auth-header">
+          <div class="logo-mark">
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 36 36"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Factory/Steel plant icon -->
+              <rect
+                x="4"
+                y="20"
+                width="6"
+                height="12"
+                rx="1"
+                fill="white"
+                opacity="0.9"
+              />
+              <rect
+                x="13"
+                y="14"
+                width="6"
+                height="18"
+                rx="1"
+                fill="white"
+                opacity="0.9"
+              />
+              <rect
+                x="22"
+                y="8"
+                width="6"
+                height="24"
+                rx="1"
+                fill="white"
+                opacity="0.9"
+              />
+              <path
+                d="M2 20 L34 20"
+                stroke="#FF8F00"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <!-- Smoke puffs -->
+              <circle cx="7" cy="17" r="2" fill="#FF8F00" opacity="0.7" />
+              <circle cx="16" cy="11" r="2" fill="#FF8F00" opacity="0.7" />
+              <circle cx="25" cy="5" r="2" fill="#FF8F00" opacity="0.7" />
+            </svg>
+          </div>
+          <h1 class="auth-title">RSP Attendance</h1>
+          <p class="auth-subtitle">
+            Rourkela Steel Plant · Vocational Training
+          </p>
+        </div>
+
+        <div class="auth-body">
+          <div
+            id="loginAlert"
+            class="alert error"
+            style="display: none"
+            role="alert"
+          >
+            <!-- Filled by JS -->
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Email Address</label>
+            <input
+              id="loginEmail"
+              class="form-input"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="your@email.com"
+              autocapitalize="none"
+            />
+            <div id="loginEmailError" class="input-error-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input
+              id="loginPassword"
+              class="form-input"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+            />
+            <div id="loginPasswordError" class="input-error-msg"></div>
+          </div>
+
+          <button
+            type="button"
+            id="loginBtn"
+            class="btn btn-primary"
+            aria-label="Sign in"
+          >
+            Sign In
+          </button>
+
+          <div style="text-align: right; margin-top: 10px">
+            <a
+              id="forgotPasswordLink"
+              style="
+                font-size: 0.8rem;
+                color: var(--text-secondary);
+                cursor: pointer;
+                text-decoration: underline;
+              "
+            >
+              Forgot password?
+            </a>
+          </div>
+
+          <div class="auth-footer">
+            New trainee?
+            <a id="goToRegisterLink">Create account</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════
+       SCREEN 2: REGISTER
+  ══════════════════════════════════════════════════════ -->
+      <div id="registerScreen" class="screen auth-screen">
+        <div class="auth-header">
+          <div class="logo-mark">
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 36 36"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="4"
+                y="20"
+                width="6"
+                height="12"
+                rx="1"
+                fill="white"
+                opacity="0.9"
+              />
+              <rect
+                x="13"
+                y="14"
+                width="6"
+                height="18"
+                rx="1"
+                fill="white"
+                opacity="0.9"
+              />
+              <rect
+                x="22"
+                y="8"
+                width="6"
+                height="24"
+                rx="1"
+                fill="white"
+                opacity="0.9"
+              />
+              <path
+                d="M2 20 L34 20"
+                stroke="#FF8F00"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <circle cx="7" cy="17" r="2" fill="#FF8F00" opacity="0.7" />
+              <circle cx="16" cy="11" r="2" fill="#FF8F00" opacity="0.7" />
+              <circle cx="25" cy="5" r="2" fill="#FF8F00" opacity="0.7" />
+            </svg>
+          </div>
+          <h1 class="auth-title">Create Account</h1>
+          <p class="auth-subtitle">Register once on Orientation Day</p>
+        </div>
+
+        <div class="auth-body">
+          <div class="form-group">
+            <label class="form-label" for="regTraineeId">Trainee ID</label>
+            <input
+              id="regTraineeId"
+              class="form-input"
+              type="text"
+              placeholder="e.g. RSP2025001"
+              autocapitalize="characters"
+              autocorrect="off"
+              spellcheck="false"
+            />
+            <div id="regTraineeIdError" class="input-error-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regFullName">Full Name</label>
+            <input
+              id="regFullName"
+              class="form-input"
+              type="text"
+              placeholder="As per your ID card"
+              autocapitalize="words"
+              autocomplete="name"
+            />
+            <div id="regFullNameError" class="input-error-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regDepartment">Department</label>
+            <select id="regDepartment" class="form-input">
+              <option value="" disabled selected>Select department…</option>
+            </select>
+            <div id="regDepartmentError" class="input-error-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regBatch">Batch</label>
+            <select id="regBatch" class="form-input">
+              <option value="" disabled selected>Select batch…</option>
+            </select>
+            <div id="regBatchError" class="input-error-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Email Address</label>
+            <input
+              id="regEmail"
+              class="form-input"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="your@email.com"
+              autocapitalize="none"
+            />
+            <div id="regEmailError" class="input-error-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regPassword">Password</label>
+            <input
+              id="regPassword"
+              class="form-input"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Minimum 6 characters"
+            />
+            <div class="password-strength">
+              <div id="pwStrengthBar" class="password-strength-bar"></div>
+            </div>
+            <div id="regPasswordError" class="input-error-msg"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regConfirmPassword"
+              >Confirm Password</label
+            >
+            <input
+              id="regConfirmPassword"
+              class="form-input"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Repeat password"
+            />
+            <div id="regConfirmPasswordError" class="input-error-msg"></div>
+          </div>
+
+          <button
+            type="button"
+            id="registerBtn"
+            class="btn btn-primary"
+            aria-label="Create account"
+          >
+            Create Account
+          </button>
+
+          <div class="auth-footer">
+            Already registered?
+            <a id="goToLoginLink">Sign in</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════
+       SCREEN 3: DASHBOARD
+  ══════════════════════════════════════════════════════ -->
+      <div id="dashboardScreen" class="screen">
+        <header class="dashboard-header">
+          <div class="dashboard-header-left">
+            <div class="header-logo">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 36 36"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="4"
+                  y="20"
+                  width="6"
+                  height="12"
+                  rx="1"
+                  fill="white"
+                  opacity="0.9"
+                />
+                <rect
+                  x="13"
+                  y="14"
+                  width="6"
+                  height="18"
+                  rx="1"
+                  fill="white"
+                  opacity="0.9"
+                />
+                <rect
+                  x="22"
+                  y="8"
+                  width="6"
+                  height="24"
+                  rx="1"
+                  fill="white"
+                  opacity="0.9"
+                />
+                <path
+                  d="M2 20 L34 20"
+                  stroke="#FF8F00"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="header-title">RSP Attendance</div>
+              <div class="header-subtitle" id="currentTime">—</div>
+            </div>
+          </div>
+          <button class="btn-logout" id="logoutBtn" aria-label="Sign out">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Sign Out
+          </button>
+        </header>
+
+        <main class="dashboard-body">
+          <!-- Session banner -->
+          <div
+            id="sessionBanner"
+            class="session-banner inactive"
+            role="status"
+            aria-live="polite"
+          >
+            <div class="session-banner-icon">⏱️</div>
+            <div class="session-banner-info">
+              <div class="session-banner-label">Session Status</div>
+              <div
+                class="session-banner-value"
+                style="color: var(--text-secondary)"
+              >
+                Loading…
+              </div>
+            </div>
+          </div>
+
+          <!-- Trainee info card -->
+          <div class="info-card">
+            <div class="info-card-header">
+              <div class="avatar" id="avatarInitials">?</div>
+              <div>
+                <div class="info-card-name" id="traineeNameDisplay">—</div>
+                <div class="info-card-id" id="traineeIdDisplay">—</div>
+              </div>
+            </div>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-item-label">Department</div>
+                <div class="info-item-value" id="traineeDeptDisplay">—</div>
+              </div>
+              <div class="info-item">
+                <div class="info-item-label">Batch</div>
+                <div class="info-item-value" id="traineeBatchDisplay">—</div>
+              </div>
+              <div class="info-item" style="grid-column: 1/-1">
+                <div class="info-item-label">Email</div>
+                <div
+                  class="info-item-value"
+                  id="traineeEmailDisplay"
+                  style="font-size: 0.8rem"
+                >
+                  —
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Today's attendance -->
+          <div class="section-title">Today's Attendance</div>
+          <div class="attendance-row">
+            <div id="morningSlot" class="attendance-slot">
+              <div class="slot-label">Morning</div>
+              <div class="slot-time">9:00–9:30 AM</div>
+              <div class="slot-status">⬜</div>
+              <div class="slot-status-text">PENDING</div>
+            </div>
+            <div id="middaySlot" class="attendance-slot">
+              <div class="slot-label">Midday</div>
+              <div class="slot-time">11:45–12:00</div>
+              <div class="slot-status">⬜</div>
+              <div class="slot-status-text">PENDING</div>
+            </div>
+          </div>
+
+          <!-- Mark Attendance Button -->
+          <div class="mark-btn-area">
+            <button
+              id="markAttendanceBtn"
+              class="btn btn-amber hidden"
+              aria-label="Mark attendance"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+                <path d="M14 17h3m0 0h3m-3 0v-3m0 3v3"></path>
+              </svg>
+              Mark Attendance Now
+            </button>
+          </div>
+
+          <!-- Recent records -->
+          <div
+            class="section-title"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <span>Recent Records</span>
+            <button
+              id="refreshAttendanceBtn"
+              style="
+                background: none;
+                border: none;
+                color: var(--text-muted);
+                cursor: pointer;
+                font-size: 0.75rem;
+                font-family: var(--font-body);
+                display: flex;
+                align-items: center;
+                gap: 4px;
+              "
+              aria-label="Refresh records"
+            >
+              ↺ Refresh
+            </button>
+          </div>
+          <div id="recentRecordsList" class="record-list">
+            <div
+              style="
+                text-align: center;
+                padding: 20px;
+                color: var(--text-muted);
+                font-size: 0.875rem;
+              "
+            >
+              Loading records…
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════
+       SCREEN 4: QR SCANNER
+  ══════════════════════════════════════════════════════ -->
+      <div id="qrScreen" class="screen">
+        <div class="screen-header">
+          <button class="btn-back" id="qrBackBtn" aria-label="Go back">
+            ←
+          </button>
+          <div>
+            <div class="screen-title">Scan QR Code</div>
+            <div class="screen-subtitle">
+              Point camera at the RSP attendance QR
+            </div>
+          </div>
+        </div>
+
+        <div class="qr-container">
+          <div
+            class="qr-viewport"
+            role="img"
+            aria-label="QR scanner viewfinder"
+          >
+            <video
+              id="qrVideo"
+              playsinline
+              muted
+              autoplay
+              aria-hidden="true"
+            ></video>
+            <canvas id="qrCanvas" aria-hidden="true"></canvas>
+            <div class="qr-overlay" aria-hidden="true">
+              <div class="qr-corner tl"></div>
+              <div class="qr-corner tr"></div>
+              <div class="qr-corner bl"></div>
+              <div class="qr-corner br"></div>
+              <div class="qr-scan-line"></div>
+            </div>
+          </div>
+
+          <p class="qr-hint">
+            Scan the permanent QR code posted at RSP training facility
+          </p>
+
+          <div
+            id="qrStatusMsg"
+            class="qr-status"
+            role="status"
+            aria-live="polite"
+          ></div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════
+       SCREEN 5: GPS VERIFICATION
+  ══════════════════════════════════════════════════════ -->
+      <div id="gpsScreen" class="screen">
+        <div class="screen-header">
+          <button class="btn-back" id="gpsBackBtn" aria-label="Go back">
+            ←
+          </button>
+          <div>
+            <div class="screen-title">GPS Verification</div>
+            <div class="screen-subtitle">Confirming your location at RSP</div>
+          </div>
+        </div>
+
+        <div class="gps-container">
+          <!-- Visual indicator -->
+          <div class="gps-visual">
+            <div id="gpsRing" class="gps-ring">
+              <span id="gpsIcon" class="gps-icon">📍</span>
+            </div>
+            <div id="gpsStatusText" class="gps-status-text">
+              Acquiring GPS signal…
+            </div>
+          </div>
+
+          <!-- GPS data grid -->
+          <div class="gps-data-grid" role="region" aria-label="GPS data">
+            <div class="gps-data-item">
+              <div class="gps-data-label">Latitude</div>
+              <div class="gps-data-value" id="gpsLat">—</div>
+            </div>
+            <div class="gps-data-item">
+              <div class="gps-data-label">Longitude</div>
+              <div class="gps-data-value" id="gpsLng">—</div>
+            </div>
+            <div class="gps-data-item">
+              <div class="gps-data-label">Distance from RSP</div>
+              <div class="gps-data-value" id="gpsDist">—</div>
+            </div>
+            <div class="gps-data-item">
+              <div class="gps-data-label">GPS Accuracy</div>
+              <div class="gps-data-value" id="gpsAcc">—</div>
+            </div>
+          </div>
+
+          <!-- Pass / Fail result -->
+          <div
+            id="gpsResultBox"
+            class="gps-result"
+            role="status"
+            style="display: none"
+            aria-live="assertive"
+          ></div>
+
+          <!-- Actions -->
+          <button
+            id="gpsSubmitBtn"
+            class="btn btn-amber hidden"
+            aria-label="Submit attendance"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Submit Attendance
+          </button>
+
+          <button
+            id="gpsRetryBtn"
+            class="btn btn-ghost hidden"
+            aria-label="Retry GPS verification"
+          >
+            ↺ Retry GPS
+          </button>
+
+          <div class="alert info" style="font-size: 0.8rem">
+            <span>ℹ️</span>
+            <span
+              >For best accuracy, step outdoors or move away from walls. GPS
+              must be within 200m of RSP with accuracy ≤50m.</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /#app -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+     GLOBAL TOAST
+═══════════════════════════════════════════════════════════ -->
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     PWA INSTALL BANNER (Android)
+═══════════════════════════════════════════════════════════ -->
+    <div id="installBanner" role="complementary" aria-label="Install app">
+      <div class="install-card">
+        <div class="install-icon">🏭</div>
+        <div class="install-text">
+          <div class="install-title">Install RSP Attendance</div>
+          <div class="install-desc">Add to home screen for quick access</div>
+        </div>
+        <div class="install-actions">
+          <button class="btn-install" id="installBtn">Install</button>
+          <button
+            class="btn-dismiss"
+            id="dismissInstallBtn"
+            aria-label="Dismiss"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     iOS ADD TO HOME SCREEN MODAL
+═══════════════════════════════════════════════════════════ -->
+    <div
+      id="iosModal"
+      role="dialog"
+      aria-modal="true"
+      aria-label="iOS installation guide"
+    >
+      <div class="ios-modal-card">
+        <div class="ios-modal-title">📱 Add to Home Screen</div>
+        <div class="ios-modal-subtitle">
+          Install RSP Attendance for the best experience on iOS
+        </div>
+
+        <div class="ios-steps">
+          <div class="ios-step">
+            <div class="ios-step-num">1</div>
+            <div class="ios-step-text">
+              Tap the <strong>Share</strong> button
+              <span
+                style="
+                  background: rgba(255, 255, 255, 0.1);
+                  padding: 2px 6px;
+                  border-radius: 4px;
+                  font-size: 1rem;
+                "
+              >
+                ⎙
+              </span>
+              at the bottom of Safari
+            </div>
+          </div>
+          <div class="ios-step">
+            <div class="ios-step-num">2</div>
+            <div class="ios-step-text">
+              Scroll down and tap <strong>"Add to Home Screen"</strong>
+            </div>
+          </div>
+          <div class="ios-step">
+            <div class="ios-step-num">3</div>
+            <div class="ios-step-text">
+              Tap <strong>"Add"</strong> in the top-right corner
+            </div>
+          </div>
+          <div class="ios-step">
+            <div class="ios-step-num">4</div>
+            <div class="ios-step-text">
+              Open <strong>RSP Attendance</strong> from your home screen — it
+              works like a native app!
+            </div>
+          </div>
+        </div>
+
+        <button
+          id="iosModalClose"
+          class="btn btn-ghost btn-sm"
+          style="width: 100%"
+        >
+          Got it, thanks
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     SUPABASE SDK & Config
+═══════════════════════════════════════════════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <!-- QR Scanning Library -->
+    <script src="https://unpkg.com/jsqr@1.4.0/dist/jsQR.js"></script>
+
+    <!-- App Scripts -->
+    <script src="app.js"></script>
+  </body>
+</html>
